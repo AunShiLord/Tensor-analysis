@@ -1,0 +1,38 @@
+Metadata-Version: 1.1
+Name: tensor-analysis
+Version: 0.9.0
+Summary: Tensor analysis package for n-dimensional tensor calculation
+Home-page: https://github.com/AunShiLord/Tensor-analysis.git
+Author: Vladimir Kuzmin, Konovalenko Anastasia, Merzlyakova Ksenia
+Author-email: aunshilord@yahoo.com
+License: UNKNOWN
+Description:     Tensor analysis package.
+            This is a separate version of what_we_commited_to_sympy.
+            Consists of:
+            Arraypy class - N-dimentional arrays
+            TensorArray class - N-dimentional array with contravariant and covariant indicies.
+            Classes declared in arraypy.py file.
+            
+            There is also modules:
+            1) tensor_methods.py       - Tensor algebra.
+            2) tensor_fields.py        - operation in tensor fields like diff, rot, lie, etc...
+            3) riemannian_geometry.py  - tensor operations about some riemannian geometry, ok?
+            4) helper_functions.py     - some help functions.
+            
+Keywords: tensor,tensor_fields,riemannian,arraypy,sympy,tensor_algebra
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Environment :: Other Environment
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Physics

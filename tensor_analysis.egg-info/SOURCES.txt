@@ -1,0 +1,13 @@
+README.txt
+setup.py
+tensor-analysis/__init__.py
+tensor-analysis/arraypy.py
+tensor-analysis/helper_functions.py
+tensor-analysis/riemannian_geometry.py
+tensor-analysis/tensor_fields.py
+tensor-analysis/tensor_methods.py
+tensor_analysis.egg-info/PKG-INFO
+tensor_analysis.egg-info/SOURCES.txt
+tensor_analysis.egg-info/dependency_links.txt
+tensor_analysis.egg-info/requires.txt
+tensor_analysis.egg-info/top_level.txt
