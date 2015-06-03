@@ -3,9 +3,9 @@
 from sympy.matrices import Matrix
 from sympy.core import Add, diff, Symbol
 from sympy.simplify import simplify
-from sympy.tensor.arraypy import Arraypy, TensorArray, matrix2arraypy, \
+from tensor_analysis.arraypy import Arraypy, TensorArray, matrix2arraypy, \
     matrix2tensor, list2arraypy, list2tensor
-from sympy.tensor.tensor_methods import is_symmetric
+from tensor_analysis.tensor_methods import is_symmetric
 
 """Module riemannian_geometry contains functions for working with tensor fields:
 - the calculation of the scalar product;
@@ -34,9 +34,9 @@ def scal_prod(X, Y, g):
     Examples:
     =========
 
-    >>> from sympy.tensor.riemannian_geometry import scal_prod
+    >>> from tensor_analysis.riemannian_geometry import scal_prod
     >>> from sympy import symbols, cos
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> x1, x2 = symbols('x1, x2')
 
     X, Y it's a vector or a vector field. They can be a list,
@@ -123,8 +123,8 @@ def christoffel_1(g, var, type_output='t'):
     Examples:
     =========
 
-    >>> from sympy.tensor.riemannian_geometry import christoffel_1
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.riemannian_geometry import christoffel_1
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> from sympy import symbols, cos
     >>> x1, x2 = symbols('x1, x2')
 
@@ -240,8 +240,8 @@ def christoffel_2(g, var, type_output='t'):
     Examples:
     =========
 
-    >>> from sympy.tensor.riemannian_geometry import christoffel_2
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.riemannian_geometry import christoffel_2
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> from sympy import symbols, cos
     >>> x1, x2 = symbols('x1, x2')
 
@@ -371,8 +371,8 @@ def covar_der(X, g, var, type_output='t'):
     Examples:
     =========
 
-    >>> from sympy.tensor.riemannian_geometry import covar_der
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.riemannian_geometry import covar_der
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> from sympy import symbols, cos
     >>> x1, x2 = symbols('x1, x2')
 
@@ -507,8 +507,8 @@ def covar_der_XY(X, Y, g, var, type_output='t'):
     Examples:
     =========
 
-    >>> from sympy.tensor.riemannian_geometry import covar_der_XY
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.riemannian_geometry import covar_der_XY
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> from sympy import symbols, cos
     >>> x1, x2 = symbols('x1, x2')
 
@@ -664,8 +664,8 @@ def riemann(g, var, type_output='t'):
     Examples:
     =========
 
-    >>> from sympy.tensor.riemannian_geometry import riemann
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.riemannian_geometry import riemann
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> from sympy import symbols, cos
     >>> x1, x2 = symbols('x1, x2')
 
@@ -797,8 +797,8 @@ def ricci(riemann, var, type_output='t'):
     Examples:
     =========
 
-    >>> from sympy.tensor.riemannian_geometry import ricci, riemann
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.riemannian_geometry import ricci, riemann
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> from sympy import symbols, cos
     >>> x1, x2 = symbols('x1, x2')
 
@@ -908,8 +908,8 @@ def scal_curv(g, ricci, var):
     Examples:
     =========
 
-    >>> from sympy.tensor.riemannian_geometry import scal_curv, ricci, riemann
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.riemannian_geometry import scal_curv, ricci, riemann
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> from sympy import symbols, cos
     >>> x1, x2 = symbols('x1, x2')
 
@@ -1018,8 +1018,8 @@ def k_sigma(X, Y, R, g, var):
     Examples:
     =========
 
-    >>> from sympy.tensor.riemannian_geometry import k_sigma, riemann
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.riemannian_geometry import k_sigma, riemann
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> from sympy import symbols, cos
     >>> x1, x2 = symbols('x1, x2')
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from sympy.tensor.arraypy import Arraypy, TensorArray, list2arraypy, \
+from tensor_analysis.arraypy import Arraypy, TensorArray, list2arraypy, \
     list2tensor, matrix2arraypy, matrix2tensor
-from sympy.tensor.tensor_methods import symmetric, asymmetric
+from tensor_analysis.tensor_methods import symmetric, asymmetric
 from sympy import Symbol, symbols
 
 arr = list2arraypy(list(range(9)), (3, 3))

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from sympy.matrices import Matrix
-from sympy.tensor.arraypy import Arraypy, TensorArray
-from sympy.tensor.riemannian_geometry import scal_prod, christoffel_1,\
+from tensor_analysis.arraypy import Arraypy, TensorArray
+from tensor_analysis.riemannian_geometry import scal_prod, christoffel_1,\
     christoffel_2, covar_der, covar_der_XY, riemann, ricci, scal_curv, k_sigma
 from sympy import symbols, cos, sin
 

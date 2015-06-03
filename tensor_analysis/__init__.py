@@ -2,8 +2,6 @@
 """A module to manipulate symbolic objects with indices including tensors
 
 """
-from .indexed import IndexedBase, Idx, Indexed
-from .index_methods import get_contraction_structure, get_indices
 from .arraypy import Arraypy, TensorArray, matrix2arraypy, matrix2tensor,\
     list2arraypy, list2tensor
 from .tensor_fields import Wedge_array, df, grad, curl, diverg, lie_xy, dw, \

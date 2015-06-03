@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from sympy.matrices import Matrix
-from sympy.tensor.arraypy import Arraypy, TensorArray, list2arraypy, list2tensor
-from sympy.tensor.tensor_fields import df, grad, curl, diverg, lie_xy, dw, \
+from tensor_analysis.arraypy import Arraypy, TensorArray, list2arraypy, list2tensor
+from tensor_analysis.tensor_fields import df, grad, curl, diverg, lie_xy, dw, \
     lie_w
 from sympy import symbols, cos, sin
 

@@ -3,14 +3,14 @@
 from sympy.matrices import Matrix, eye, det
 from sympy.core import diff, Add, Symbol
 from sympy.simplify import simplify
-from sympy.tensor.arraypy import Arraypy, TensorArray, matrix2arraypy, \
+from tensor_analysis.arraypy import Arraypy, TensorArray, matrix2arraypy, \
     matrix2tensor, list2arraypy, list2tensor
-from sympy.tensor.tensor_methods import is_asymmetric, perm_parity, \
+from tensor_analysis.tensor_methods import is_asymmetric, perm_parity, \
     lower_index, raise_index, is_symmetric, tensor_product
 from sympy import sqrt
 from itertools import permutations
 from sympy.functions.combinatorial.factorials import factorial
-from sympy.tensor.helper_functions import check_vector_of_arguments, \
+from tensor_analysis.helper_functions import check_vector_of_arguments, \
     check_metric_tensor, check_the_vector_field, sign_permutations, \
     delete_index_from_list, replace_index_to_k
 
@@ -42,9 +42,9 @@ def df(f, args, output_type='l'):
     Examples:
     =========
 
-    >>> from sympy.tensor.tensor_fields import df
+    >>> from tensor_analysis.tensor_fields import df
     >>> from sympy import symbols, sin
-    >>> from sympy.tensor.arraypy import Arraypy
+    >>> from tensor_analysis.arraypy import Arraypy
     >>> x1, x2, x3= symbols('x1 x2 x3')
 
     f it's a function the differential of that is calculated:
@@ -115,9 +115,9 @@ def grad(f, args, g=None, output_type=None):
     Examples:
     =========
 
-    >>> from sympy.tensor.tensor_fields import grad
+    >>> from tensor_analysis.tensor_fields import grad
     >>> from sympy import symbols, sin
-    >>> from sympy.tensor.arraypy import Arraypy
+    >>> from tensor_analysis.arraypy import Arraypy
     >>> x1, x2, x3 = symbols('x1 x2 x3')
 
     f it's a function the differential of that is calculated:
@@ -229,9 +229,9 @@ def curl(X, args, output_type=None):
     Examples:
     =========
 
-    >>> from sympy.tensor.tensor_fields import curl
+    >>> from tensor_analysis.tensor_fields import curl
     >>> from sympy import symbols, cos
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
     >>> x1, x2, x3 = symbols('x1 x2 x3')
 
     X is a vector field, args it's a list of symbol arguments of a vector field
@@ -322,7 +322,7 @@ def diverg(X, args, g=None):
     Examples:
     =========
 
-    >>> from sympy.tensor.tensor_fields import diverg
+    >>> from tensor_analysis.tensor_fields import diverg
     >>> from sympy import symbols, cos
     >>> from sympy.matrices import Matrix
     >>> x1, x2, x3 = symbols('x1 x2 x3')
@@ -385,7 +385,7 @@ def lie_xy(X, Y, args, output_type=None):
 
     Examples:
     =========
-    >>> from sympy.tensor.tensor_fields import lie_xy
+    >>> from tensor_analysis.tensor_fields import lie_xy
     >>> from sympy import symbols, cos, sin
     >>> x1, x2, x3 = symbols('x1 x2 x3')
 
@@ -507,9 +507,9 @@ def dw(omega, args):
     Examples:
     =========
 
-    >>> from sympy.tensor.tensor_fields import dw
+    >>> from tensor_analysis.tensor_fields import dw
     >>> from sympy import symbols
-    >>> from sympy.tensor.arraypy import Arraypy
+    >>> from tensor_analysis.arraypy import Arraypy
     >>> x1, x2, x3 = symbols('x1 x2 x3')
 
     omega - differential form, differential which is calculated.
@@ -605,9 +605,9 @@ def lie_w(omega, X, args):
     Examples:
     =========
 
-    >>> from sympy.tensor.tensor_fields import lie_w
+    >>> from tensor_analysis.tensor_fields import lie_w
     >>> from sympy import symbols, cos
-    >>> from sympy.tensor.arraypy import Arraypy
+    >>> from tensor_analysis.arraypy import Arraypy
     >>> x1, x2, x3 = symbols('x1 x2 x3')
 
     omega - skew-symmetric tensor. Can be a tensor of type (0,p) or an array
@@ -741,8 +741,8 @@ def tensor2wedgearray(A):
     Examples:
     =========
     >>> from sympy import symbols
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
-    >>> from sympy.tensor.tensor_fields import tensor2wedgearray
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.tensor_fields import tensor2wedgearray
 
     >>> x1, x2, x3 = symbols('x1 x2 x3')
     >>> y2 = TensorArray(Arraypy((3, 3)), (-1, -1))
@@ -798,8 +798,8 @@ def wedgearray2tensor(B):
     Examples:
     =========
     >>> from sympy import symbols
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
-    >>> from sympy.tensor.tensor_fields import tensor2wedgearray, \
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.tensor_fields import tensor2wedgearray, \
     wedgearray2tensor
 
     >>> x1, x2, x3 = symbols('x1 x2 x3')
@@ -852,8 +852,8 @@ def int_product(w, X):
     Examples:
     =========
     >>> from sympy import symbols
-    >>> from sympy.tensor.arraypy import Arraypy
-    >>> from sympy.tensor.tensor_fields import int_product
+    >>> from tensor_analysis.arraypy import Arraypy
+    >>> from tensor_analysis.tensor_fields import int_product
 
     >>> x1, x2, x3, l, m, n = symbols('x1 x2 x3 l m n')
     >>> omega2=Arraypy([2,3,1]).to_tensor((-1,-1))
@@ -933,8 +933,8 @@ def g_tensor(T, S, g):
     =========
 
     >>> from sympy import symbols, Matrix
-    >>> from sympy.tensor.arraypy import Arraypy
-    >>> from sympy.tensor.tensor_fields import g_tensor
+    >>> from tensor_analysis.arraypy import Arraypy
+    >>> from tensor_analysis.tensor_fields import g_tensor
 
     >>> x, y, z, w = symbols('x, y, z, w')
     >>> omega=Arraypy([2,3,0]).to_tensor((-1,1))
@@ -1013,8 +1013,8 @@ def g_wedge(T, S, g):
     =========
 
     >>> from sympy import symbols
-    >>> from sympy.tensor.arraypy import Arraypy
-    >>> from sympy.tensor.tensor_fields import g_wedge
+    >>> from tensor_analysis.arraypy import Arraypy
+    >>> from tensor_analysis.tensor_fields import g_wedge
 
     >>> l, m, n = symbols('l, m, n')
     >>> X_w=Arraypy([1,3,1]).to_tensor((-1))
@@ -1060,8 +1060,8 @@ def hodge_star(T, g):
     Examples:
     =========
     >>> from sympy import symbols, Matrix
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
-    >>> from sympy.tensor.tensor_fields import hodge_star
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.tensor_fields import hodge_star
 
     >>> x1, x2, x3 = symbols('x1 x2 x3')
     >>> y3 = TensorArray(Arraypy((3, 3, 3)), (-1, -1, -1))
@@ -1141,8 +1141,8 @@ def codiff(w, g, args, eta=0):
     Examples:
     =========
     >>> from sympy import symbols, Matrix
-    >>> from sympy.tensor.arraypy import Arraypy
-    >>> from sympy.tensor.tensor_fields import codiff
+    >>> from tensor_analysis.arraypy import Arraypy
+    >>> from tensor_analysis.tensor_fields import codiff
 
     >>> x1, x2, x3 = symbols('x1 x2 x3')
     >>> omega2=Arraypy([2,3,0]).to_tensor((-1,-1))

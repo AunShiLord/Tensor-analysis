@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from sympy.tensor.arraypy import Arraypy, TensorArray, list2arraypy, \
+from tensor_analysis.arraypy import Arraypy, TensorArray, list2arraypy, \
     list2tensor, matrix2arraypy, matrix2tensor
-from sympy.tensor.tensor_methods import tensor_product
+from tensor_analysis.tensor_methods import tensor_product
 from sympy import Symbol, symbols
 from sympy.matrices import Matrix, MatrixSymbol
 import sys

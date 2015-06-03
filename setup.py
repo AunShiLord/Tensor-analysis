@@ -3,8 +3,8 @@
 from setuptools import setup
 setup(
     name = "tensor-analysis",
-    packages = ["tensor-analysis"],
-    version = "0.9.0",   
+    packages = ["tensor_analysis", "tensor_analysis/tests"],
+    version = "0.9.2",   
     description = "Tensor analysis package for n-dimensional tensor calculation",
     author = "Vladimir Kuzmin, Konovalenko Anastasia, Merzlyakova Ksenia",
     author_email = "aunshilord@yahoo.com",
@@ -21,11 +21,9 @@ setup(
         "Programming Language :: Python :: 3.2",
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
-        "Environment :: Other Environment",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Scientific/Engineering :: Mathematics",
         "Topic :: Scientific/Engineering :: Physics",       
         ],
@@ -33,7 +31,7 @@ setup(
     Tensor analysis package.
     This is a separate version of what_we_commited_to_sympy.
     Consists of:
-    Arraypy class - N-dimentional arrays
+    Arraypy class - N-dimentional arrays.
     TensorArray class - N-dimentional array with contravariant and covariant indicies.
     Classes declared in arraypy.py file.
     

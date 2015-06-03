@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from sympy.tensor.tensor_methods import is_symmetric, is_asymmetric
-from sympy.tensor.arraypy import Arraypy, TensorArray
+from tensor_analysis.tensor_methods import is_symmetric, is_asymmetric
+from tensor_analysis.arraypy import Arraypy, TensorArray
 from sympy.matrices import Matrix
 
 
@@ -53,7 +53,7 @@ def delete_index_from_list(_data, index):
     Examples:
     =========
 
-    >>> from sympy.tensor.helper_functions import delete_index_from_list
+    >>> from tensor_analysis.helper_functions import delete_index_from_list
     >>> print(delete_index_from_list([10, 20, 30, 40, 50, 60], 3))
     (10, 20, 30, 50, 60)
     >>> print(delete_index_from_list((10, 20, 30, 40, 50, 60), 0))
@@ -75,7 +75,7 @@ def replace_index_to_k(_data, index, k):
     Examples:
     =========
 
-    >>> from sympy.tensor.helper_functions import replace_index_to_k
+    >>> from tensor_analysis.helper_functions import replace_index_to_k
     >>> print(replace_index_to_k([10, 20, 30, 40], 0, 100))
     (100, 20, 30, 40)
     >>> print(replace_index_to_k((10, 20, 30, 40), 2, 100))
@@ -97,7 +97,7 @@ def sign_permutations(lst):
     Examales:
     =========
 
-    >>> from sympy.tensor.helper_functions import sign_permutations
+    >>> from tensor_analysis.helper_functions import sign_permutations
     >>> print(sign_permutations([0, 1, 0]))
     0
     >>> print(sign_permutations([1, 1]))

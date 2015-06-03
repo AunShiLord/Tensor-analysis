@@ -212,7 +212,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
+        >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
         >>> a = list2arraypy([1 for i in range (4)], (2,2))
         >>> b = list2arraypy([4 for i in range (4)], (2,2))
         >>> c = a + b
@@ -254,7 +254,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
+        >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
         >>> a = list2arraypy([1 for i in range (4)], (2,2))
         >>> b = list2arraypy([4 for i in range (4)], (2,2))
         >>> c = a - b
@@ -348,7 +348,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
+        >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
         >>> a = list2arraypy(list(range(4)), (2,2))
         >>> print (a)
         0 1
@@ -389,7 +389,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        from sympy.tensor.arraypy import Arraypy
+        from tensor_analysis.arraypy import Arraypy
         a = Arraypy((2,2))
         a[0,0] = 1
         a.__setitem__((1,1),1)
@@ -430,7 +430,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy
+        >>> from tensor_analysis.arraypy import Arraypy
         >>> a = Arraypy( (3,3) )
         >>> len(a)
         9
@@ -446,7 +446,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy
+        >>> from tensor_analysis.arraypy import Arraypy
         >>> a = Arraypy ( (2, 2), 'Py' )
         >>> print (a)
         Py[0, 0] Py[0, 1]
@@ -484,7 +484,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, copy
+        >>> from tensor_analysis.arraypy import Arraypy, copy
         >>> a = Arraypy((2,2))
         >>> b = copy(a)
         >>> c = a
@@ -534,7 +534,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy
+        >>> from tensor_analysis.arraypy import Arraypy
         >>> a = Arraypy((2,2,2))
         >>> idx = (0, 0, 0)
         >>> for i in range(0, len(a)):
@@ -599,7 +599,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy
+        >>> from tensor_analysis.arraypy import Arraypy
         >>> a = Arraypy( '1..2, 1..3', 'Py' )
         >>> a.shape
         (2, 3)
@@ -650,7 +650,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy
+        >>> from tensor_analysis.arraypy import Arraypy
         >>> a = Arraypy((3,3))
         >>> a.shape
         (3, 3)
@@ -665,7 +665,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy
+        >>> from tensor_analysis.arraypy import Arraypy
         >>> a = Arraypy ( [(0, 2), (1, 3)] )
         >>> a.start_index
         (0, 1)
@@ -680,7 +680,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy
+        >>> from tensor_analysis.arraypy import Arraypy
         >>> a = Arraypy ( [(0, 2), (1, 3)] )
         >>> a.end_index
         (2, 3)
@@ -705,7 +705,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        from sympy.tensor.arraypy import Arraypy
+        from tensor_analysis.arraypy import Arraypy
         a = Arraypy ( (3,4,5,6,3) )
         a.rank
         5
@@ -722,7 +722,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy
+        >>> from tensor_analysis.arraypy import Arraypy
         >>> a = Arraypy((2,2))
         >>> print(a.index_list)
         [(0, 0), (0, 1), (1, 0), (1, 1)]
@@ -748,7 +748,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        from sympy.tensor.arraypy import Arraypy, list2arraypy
+        from tensor_analysis.arraypy import Arraypy, list2arraypy
         a = list2arraypy( [1 for i in range(9)], (3,3))
         b = a.to_matrix()
         print(b)
@@ -784,11 +784,11 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
+        >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
         >>> a = list2arraypy(list(range(9)), (3,3))
         >>> b = a.to_tensor((-1,1))
         >>> type(b)
-        <class 'sympy.tensor.arraypy.TensorArray'>
+        <class 'tensor_analysis.arraypy.TensorArray'>
 
         """
         return TensorArray(self, ind_char)
@@ -800,7 +800,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy
+        >>> from tensor_analysis.arraypy import Arraypy
         >>> a = Arraypy ( (2,2) )
         >>> a = Arraypy ( (2,2), 'Py' )
         >>> print (a)
@@ -891,7 +891,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor ([3 for i in range(9)], (3,3), (1,-1))
         >>> b = list2tensor ([2 for i in range(9)], (3,3), (1,-1))
         >>> c = a + b
@@ -919,7 +919,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor ([3 for i in range(9)], (3,3), (1,-1))
         >>> b = list2tensor ([2 for i in range(9)], (3,3), (1,-1))
         >>> c = a - b
@@ -975,7 +975,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, copy
+        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, copy
         >>> a = TensorArray(Arraypy((2,2)), (1,1))
         >>> b = copy(a)
         >>> c = a
@@ -993,7 +993,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, TensorArray
+        >>> from tensor_analysis.arraypy import Arraypy, TensorArray
         >>> a = Arraypy ((3,3,3,3,3)).to_tensor((1, 1, -1, 1, -1))
         >>> a.type_pq
         (3, 2)
@@ -1015,7 +1015,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor ([3 for i in range(9)], (3,3), (1,-1))
         >>> a.ind_char
         (1, -1)
@@ -1034,7 +1034,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor, list2arraypy
+        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor, list2arraypy
         >>> a = list2tensor(list(range(27)), (3,3,3), (1, -1, 1))
         >>> b = a.contract(1,2)
         >>> print (b)
@@ -1288,7 +1288,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor(list(range(6)), (3,2), (1, -1))
         >>> print (a)
         0 1
@@ -1333,11 +1333,11 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor (list(range(9)), (3, 3), (1, -1))
         >>> b = a.to_arraypy()
         >>> type(b)
-        <class 'sympy.tensor.arraypy.Arraypy'>
+        <class 'tensor_analysis.arraypy.Arraypy'>
         >>> print (b)
         0 1 2
         3 4 5
@@ -1359,14 +1359,14 @@ def matrix2arraypy(matrix):
     Examples
     ========
 
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray, matrix2arraypy
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray, matrix2arraypy
     >>> from sympy import Matrix
     >>> a = Matrix(((1,2),(3,4)))
     >>> print (a)
     Matrix([[1, 2], [3, 4]])
     >>> b = matrix2arraypy(a)
     >>> type(b)
-    <class 'sympy.tensor.arraypy.Arraypy'>
+    <class 'tensor_analysis.arraypy.Arraypy'>
     >>> print (b)
     1 2
     3 4
@@ -1395,14 +1395,14 @@ def matrix2tensor(matrix, ind_char=(-1, -1)):
     Examples
     ========
 
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray, matrix2tensor
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray, matrix2tensor
     >>> from sympy import Matrix
     >>> a = Matrix(((1,2),(3,4)))
     >>> print (a)
     Matrix([[1, 2], [3, 4]])
     >>> b = matrix2tensor(a, (1,-1))
     >>> type(b)
-    <class 'sympy.tensor.arraypy.TensorArray'>
+    <class 'tensor_analysis.arraypy.TensorArray'>
     >>> print (b)
     1 2
     3 4
@@ -1427,7 +1427,7 @@ def list2arraypy(list_arr, shape=0):
     Examples
     ========
 
-    >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
+    >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
     >>> a = list2arraypy(list(range(3*3)), (3,3))
     >>> print (a)
     0 1 2
@@ -1474,10 +1474,10 @@ def list2tensor(list_arr, shape=0, ind_char=0):
     Examples
     ========
 
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
     >>> a = list2tensor([i*2 for i in range(9)], (3,3), (-1,1))
     >>> type(a)
-    <class 'sympy.tensor.arraypy.TensorArray'>
+    <class 'tensor_analysis.arraypy.TensorArray'>
     >>> print (a)
     0 2 4
     6 8 10

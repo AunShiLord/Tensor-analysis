@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from itertools import permutations
-from sympy.tensor.arraypy import Arraypy, TensorArray, copy
+from tensor_analysis.arraypy import Arraypy, TensorArray, copy
 from random import randint
 from sympy.functions.combinatorial.factorials import factorial
 from sympy import expand
@@ -17,8 +17,8 @@ def symmetric(in_arr):
     Examples
     ========
 
-    >>> from sympy.tensor.arraypy import list2arraypy
-    >>> from sympy.tensor.tensor_methods import symmetric
+    >>> from tensor_analysis.arraypy import list2arraypy
+    >>> from tensor_analysis.tensor_methods import symmetric
     >>> a = list2arraypy(list(range(9)), (3,3))
     >>> b = symmetric(a)
     >>> print (b)
@@ -70,8 +70,8 @@ def asymmetric(in_arr):
     Examples
     ========
 
-    >>> from sympy.tensor.arraypy import list2arraypy
-    >>> from sympy.tensor.tensor_methods import asymmetric
+    >>> from tensor_analysis.arraypy import list2arraypy
+    >>> from tensor_analysis.tensor_methods import asymmetric
     >>> a = list2arraypy(list(range(9)), (3,3))
     >>> b = asymmetric(a)
     >>> print (b)
@@ -130,8 +130,8 @@ def tensor_product(first_tensor, second_tensor):
     Examples
     ========
 
-    >>> from sympy.tensor.arraypy import Arraypy, TensorArray
-    >>> from sympy.tensor.tensor_methods import tensor_product
+    >>> from tensor_analysis.arraypy import Arraypy, TensorArray
+    >>> from tensor_analysis.tensor_methods import tensor_product
     >>> a = TensorArray( Arraypy ('1..2', 'X'), 1)
     >>> b = TensorArray( Arraypy ('1..2', 'Y'), -1)
     >>> c = tensor_product(a, b)
@@ -208,8 +208,8 @@ def lower_index(tensor, metric_tensor, *index_numbers_to_low):
     Examples
     ========
     >>> from sympy import symbols, sin
-    >>> from sympy.tensor.arraypy import list2tensor
-    >>> from sympy.tensor.tensor_methods import lower_index
+    >>> from tensor_analysis.arraypy import list2tensor
+    >>> from tensor_analysis.tensor_methods import lower_index
     >>> x, y, z, w, r, phi = symbols('x y z w r phi')
     >>> A = list2tensor([1, 0, 0, 0, r**2, 0, 0, 0, (r**2)*sin(phi)], (3, 3) ,(-1, -1))
     >>> print(A)
@@ -287,8 +287,8 @@ def raise_index(tensor, metric_tensor, *index_numbers_to_raise):
     Examples
     ========
     >>> from sympy import symbols, sin
-    >>> from sympy.tensor.arraypy import list2tensor
-    >>> from sympy.tensor.tensor_methods import raise_index
+    >>> from tensor_analysis.arraypy import list2tensor
+    >>> from tensor_analysis.tensor_methods import raise_index
     >>> x, y, z, w, r, phi = symbols('x y z w r phi')
     >>> A = list2tensor([1, 0, 0, 0, r**2, 0, 0, 0, (r**2)*sin(phi)], (3, 3) ,(-1, -1))
     >>> print(A)
@@ -454,7 +454,7 @@ def perm_parity(lst):
 
     >>> from sympy.matrices import zeros
     >>> from itertools import permutations
-    >>> from sympy.tensor.tensor_methods import perm_parity
+    >>> from tensor_analysis.tensor_methods import perm_parity
     >>> signs=zeros(6)
     >>> temp_i=0
     >>> for p in permutations(range(3)):
