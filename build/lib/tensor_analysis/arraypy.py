@@ -3,8 +3,7 @@
 from sympy import Symbol
 from sympy.matrices import Matrix, MatrixSymbol
 from copy import copy
-from itertools import permutations
-from sympy.core.basic import Basic
+from sympy import sympify
 
 """
 Module "arraypy" describes tensor and it's bases - Multidimentional arrays.
@@ -13,7 +12,7 @@ list2arraypy, matrix2arraypy, list2tensor, matrix2tensor.
 """
 
 
-class Arraypy(Basic):
+class Arraypy(object):
 
     """
     N-dimentional array.
@@ -55,7 +54,7 @@ class Arraypy(Basic):
 
         # main variables declaration
         self._name = '0'
-        self._sparse = False
+        self._sparse = True
         self._dims = [1]
         self._start_index = [0]
         self._end_index = [1]
@@ -212,7 +211,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
+        >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
         >>> a = list2arraypy([1 for i in range (4)], (2,2))
         >>> b = list2arraypy([4 for i in range (4)], (2,2))
         >>> c = a + b
@@ -222,6 +221,8 @@ class Arraypy(Basic):
 
         """
 
+        if other == 0:
+            return self
         if not isinstance(other, Arraypy):
             raise TypeError('Both operands must be Arraypy type')
         if self._dims != other._dims:
@@ -254,7 +255,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
+        >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
         >>> a = list2arraypy([1 for i in range (4)], (2,2))
         >>> b = list2arraypy([4 for i in range (4)], (2,2))
         >>> c = a - b
@@ -262,6 +263,8 @@ class Arraypy(Basic):
         -3 -3
         -3 -3
         """
+        if other == 0:
+            return self
         if not isinstance(other, Arraypy):
             raise TypeError('Both operands must be Arraypy type')
         if self._dims != other._dims:
@@ -307,6 +310,43 @@ class Arraypy(Basic):
 
         return res
 
+    def __truediv__(self, other):
+        """
+        Overloads /.
+        n-dimensional arrays can be divided on atom types (int, float, Symbol)
+
+        Examples
+        ========
+
+        """
+        # forming list of tuples for Arraypy constructor of type
+        # a = Arraypy( [(a, b), (c, d), ... , (y, z)] )
+        arg = [(self.start_index[i], self.end_index[i])
+               for i in range(self._rank)]
+        res = Arraypy(arg)
+
+        idx = self.start_index
+        for i in range(len(self)):
+            res[idx] = self[idx] / other
+            idx = self.next_index(idx)
+
+        return res
+
+    # imethods. += -= *= /=
+    def __iadd__(self, other):
+            return self + other
+    def __isub__(self, other):
+            return self - other
+    def __imul__(self, other):
+            return self * other
+    def __itruediv__(self, other):
+        return self / other
+
+    __radd__ = __add__
+    __rmul__ = __mul__
+    __rsub__ = __sub__
+    __rtruediv__ = __truediv__
+
     def __eq__(self, other):
         """
         Overloads '=='.
@@ -330,7 +370,8 @@ class Arraypy(Basic):
         False
         """
         if not isinstance(other, Arraypy):
-            raise TypeError('Compared instances must be Arraypy type')
+            return False
+            #raise TypeError('Compared instances must be Arraypy type')
         if (self.shape != other.shape or self.start_index !=
                 other.start_index or self.end_index != other.end_index):
             return False
@@ -348,7 +389,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
+        >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
         >>> a = list2arraypy(list(range(4)), (2,2))
         >>> print (a)
         0 1
@@ -389,7 +430,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        from tensor_analysis.arraypy import Arraypy
+        from sympy.tensor.arraypy import Arraypy
         a = Arraypy((2,2))
         a[0,0] = 1
         a.__setitem__((1,1),1)
@@ -409,16 +450,24 @@ class Arraypy(Basic):
             if index[i] >= self._end_index[
                     i] or index[i] < self._start_index[i]:
                 raise ValueError('Value ' + str(i) + ' out of border')
+            
+        # temporary fix. Arraypy sympify is not correct
+        if not isinstance(value, Arraypy):
+            value = sympify(value)
 
         # setting element. If array is sparse, index in dictionary and value is
         # 0 then poping it from dictionary
         # If array is sparse, index NOT in dictionary and value is 0 then do
         # nothing
         try:
-            if self._sparse and value == 0 and index in self._output:
-                self._output.pop(index)
-            elif value == 0 and index not in self._output:
-                exit
+            # temporary fix. To allow Arraypy to be an element of Arraypy
+            if not isinstance(value, Arraypy):
+                if self._sparse and value == 0 and index in self._output:
+                    self._output.pop(index)
+                elif value == 0 and index not in self._output:
+                    exit
+                else:
+                    self._output[index] = value
             else:
                 self._output[index] = value
         except NameError:
@@ -430,7 +479,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy
+        >>> from sympy.tensor.arraypy import Arraypy
         >>> a = Arraypy( (3,3) )
         >>> len(a)
         9
@@ -446,7 +495,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy
+        >>> from sympy.tensor.arraypy import Arraypy
         >>> a = Arraypy ( (2, 2), 'Py' )
         >>> print (a)
         Py[0, 0] Py[0, 1]
@@ -484,7 +533,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, copy
+        >>> from sympy.tensor.arraypy import Arraypy, copy
         >>> a = Arraypy((2,2))
         >>> b = copy(a)
         >>> c = a
@@ -534,7 +583,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy
+        >>> from sympy.tensor.arraypy import Arraypy
         >>> a = Arraypy((2,2,2))
         >>> idx = (0, 0, 0)
         >>> for i in range(0, len(a)):
@@ -599,7 +648,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy
+        >>> from sympy.tensor.arraypy import Arraypy
         >>> a = Arraypy( '1..2, 1..3', 'Py' )
         >>> a.shape
         (2, 3)
@@ -650,7 +699,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy
+        >>> from sympy.tensor.arraypy import Arraypy
         >>> a = Arraypy((3,3))
         >>> a.shape
         (3, 3)
@@ -665,7 +714,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy
+        >>> from sympy.tensor.arraypy import Arraypy
         >>> a = Arraypy ( [(0, 2), (1, 3)] )
         >>> a.start_index
         (0, 1)
@@ -680,7 +729,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy
+        >>> from sympy.tensor.arraypy import Arraypy
         >>> a = Arraypy ( [(0, 2), (1, 3)] )
         >>> a.end_index
         (2, 3)
@@ -705,7 +754,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        from tensor_analysis.arraypy import Arraypy
+        from sympy.tensor.arraypy import Arraypy
         a = Arraypy ( (3,4,5,6,3) )
         a.rank
         5
@@ -722,7 +771,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy
+        >>> from sympy.tensor.arraypy import Arraypy
         >>> a = Arraypy((2,2))
         >>> print(a.index_list)
         [(0, 0), (0, 1), (1, 0), (1, 1)]
@@ -748,7 +797,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        from tensor_analysis.arraypy import Arraypy, list2arraypy
+        from sympy.tensor.arraypy import Arraypy, list2arraypy
         a = list2arraypy( [1 for i in range(9)], (3,3))
         b = a.to_matrix()
         print(b)
@@ -784,11 +833,11 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
+        >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
         >>> a = list2arraypy(list(range(9)), (3,3))
         >>> b = a.to_tensor((-1,1))
         >>> type(b)
-        <class 'tensor_analysis.arraypy.TensorArray'>
+        <class 'sympy.tensor.arraypy.TensorArray'>
 
         """
         return TensorArray(self, ind_char)
@@ -800,7 +849,7 @@ class Arraypy(Basic):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy
+        >>> from sympy.tensor.arraypy import Arraypy
         >>> a = Arraypy ( (2,2) )
         >>> a = Arraypy ( (2,2), 'Py' )
         >>> print (a)
@@ -891,7 +940,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor ([3 for i in range(9)], (3,3), (1,-1))
         >>> b = list2tensor ([2 for i in range(9)], (3,3), (1,-1))
         >>> c = a + b
@@ -919,7 +968,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor ([3 for i in range(9)], (3,3), (1,-1))
         >>> b = list2tensor ([2 for i in range(9)], (3,3), (1,-1))
         >>> c = a - b
@@ -963,7 +1012,8 @@ class TensorArray(Arraypy):
         """
         if not isinstance(other, TensorArray):
             raise TypeError('Compared instances must be TensorArray type')
-        if (self._ind_char != other._ind_char or self.base != other.base):
+        if (not(self._ind_char == other._ind_char)
+                or not(self.base == other.base)):
             return False
 
         return True
@@ -975,7 +1025,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, copy
+        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, copy
         >>> a = TensorArray(Arraypy((2,2)), (1,1))
         >>> b = copy(a)
         >>> c = a
@@ -993,7 +1043,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, TensorArray
+        >>> from sympy.tensor.arraypy import Arraypy, TensorArray
         >>> a = Arraypy ((3,3,3,3,3)).to_tensor((1, 1, -1, 1, -1))
         >>> a.type_pq
         (3, 2)
@@ -1015,7 +1065,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor ([3 for i in range(9)], (3,3), (1,-1))
         >>> a.ind_char
         (1, -1)
@@ -1034,7 +1084,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor, list2arraypy
+        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor, list2arraypy
         >>> a = list2tensor(list(range(27)), (3,3,3), (1, -1, 1))
         >>> b = a.contract(1,2)
         >>> print (b)
@@ -1078,206 +1128,34 @@ class TensorArray(Arraypy):
             idx1 = idx2
             idx2 = temp
 
-        # old_index keeps index of current tensor
-        old_index = [i for i in self._start_index]
-
-        # new_index keeps index of result tensor
-        new_index = []
-        for i in range(self._rank):
-            if i != idx1 and i != idx2:
-                new_index.append(self._start_index[i])
-        if new_index == []:
-            new_index.append(0)
-
-        # new_dims will be a shape of result tensor
-        new_dims = copy(list(self._dims))
-        new_dims.pop(idx1)
-        if len(new_dims) == 1:
-            new_dims = (1,)
-        else:
-            new_dims.pop(idx2)
-
-        # number of elements of new tensor
-        new_loop_size = int(
-            self._loop_size / self._dims[idx1] / self._dims[idx2])
-
-        # elements of contracted tensor will be assigned to this dictionary
-        new_output = {}
-
-        for i in range(new_loop_size):
-
-            new_output[tuple(new_index)] = 0
-            old_index[idx1] = self._start_index[idx1]
-            old_index[idx2] = self._start_index[idx2]
-
-            # setting elements to new dictionary
-            for k in range(0, self._dims[idx1]):
-                new_output[tuple(new_index)] += self._output[tuple(old_index)]
-                old_index[idx1] += 1
-                old_index[idx2] += 1
-
-            # Finding next index of the current tensor. the code below is
-            # similar to method .next_index with few additions.
-            k = 1
-            j = self._rank - 1
-            # input index numbers will be passed (they are changing in code
-            # block above)
-            while j == idx1 or j == idx2:
-                j = self._rank - 1 - k
-                k += 1
-            if j > -1:
-                old_index[j] += 1
-                if (old_index[j] == self._dims[j]) and (j != 0):
-                    while (old_index[j] == self._dims[j]) and j > 0:
-                        old_index[j] = 0
-                        j -= 1
-                        while j == idx1 or j == idx2:
-                            j -= 1
-                        if j > 0:
-                            old_index[j] += 1
-
-            # Finding next index of the result tensor. the code below is
-            # similar to method .next_index with few additions.
-            j = len(new_dims) - 1
-            if not new_index == []:
-                new_index[j] += 1
-                if (new_index[j] == new_dims[j]) and (j != 0):
-                    while (new_index[j] == self._dims[j]) and j > 0:
-                        new_index[j] = 0
-                        j -= 1
-                        new_index[j] += 1
-
-        # creating new Arraypy base
-        if (self._sparse):
-            res_array = Arraypy('sparse')
-        else:
-            res_array = Arraypy()
-
-        res_array._sparse = self._sparse
-        res_array._output = new_output
-        res_array._name = self._name
-        res_array._loop_size = new_loop_size
-
-        res_array._dims = tuple(new_dims)
-
-        # creating start_index
-        new_start_index = copy(list(self._start_index))
-        new_start_index .pop(idx1)
-        if len(new_start_index) == 1:
-            new_start_index = (0,)
-        else:
-            new_start_index.pop(idx2)
-        res_array._start_index = tuple(new_start_index)
-
-        # creating end index
-        new_end_index = copy(list(self._end_index))
-        new_end_index .pop(idx1)
-        if len(new_end_index) == 1:
-            new_end_index = (1,)
-        else:
-            new_end_index.pop(idx2)
-        res_array._end_index = tuple(new_end_index)
-
-        # new array rank
-        res_array._rank = len(new_dims)
-
-        # valency of new tensor
-        new_valency = copy(list(self._ind_char))
-        new_valency.pop(idx1)
-        if len(new_valency) == 1:
-            new_valency = (1,)
-        else:
-            new_valency.pop(idx2)
-
-        # creating tensor
-        res_tensor = TensorArray(res_array, tuple(new_valency))
-
-        return res_tensor
-    '''
-    def contract2(self, idx1, idx2):
-        if idx1 > self._rank or idx2 > self._rank or idx1 == idx2:
-            raise ValueError('Wrong index')
-        if idx1 < 1 or idx2 < 0:
-            raise ValueError('Index starts from 1')
-
-        idx1 -= 1
-        idx2 -= 1
-
-        if self._ind_char[idx1] == self._ind_char[idx2]:
-            raise ValueError('Indexes must have diferent valency (ind_char)')
-        for i in self._dims:
-            if self._dims[0] != i:
-                raise TypeError('Can''t do that in dimension like this')
-
-        # making idx1 greater then idx2
-        if idx1 < idx2:
-            temp = idx1
-            idx1 = idx2
-            idx2 = temp
-
-        # old_index keeps index of current tensor
-        # old_index = [i for i in self._start_index]
-        old_index = list(self.start_index)
-
         # creating result tensor.
         # result tensor valency will be (p-1, q-1)
         arg = [(self.start_index[i], self.end_index[i])
-                   for i in range(self.rank) if i != idx1 and i != idx2]
+               for i in range(self.rank) if i != idx1 and i != idx2]
         if arg == []:
             arg = 1
-            
-        new_ind_char = [self.ind_char[i] 
+
+        new_ind_char = [self.ind_char[i]
                         for i in range(self.rank) if i != idx1 and i != idx2]
         if new_ind_char == []:
             new_ind_char = 1
-            
-        result_tensor = TensorArray(Arraypy(arg), new_ind_char)            
-        new_index = list(result_tensor.start_index)
 
-        for i in range(len(result_tensor)):
-            
-            old_index[idx1] = self.start_index[idx1]
-            old_index[idx2] = self.start_index[idx2]
+        result_tensor = TensorArray(Arraypy(arg), new_ind_char)
 
-            # setting elements to new dictionary
-            for k in range(0, self._dims[idx1]):
-                result_tensor[tuple(new_index)] += self[tuple(old_index)]
-                old_index[idx1] += 1
-                old_index[idx2] += 1
+        for i in result_tensor.index_list:
+            temp_index = list(i)
+            if (len(result_tensor) == 1):
+                temp_index = [self.start_index[idx2], self.start_index[idx1]]
+            else:
+                temp_index.insert(idx2, self.start_index[idx2])
+                temp_index.insert(idx1, self.start_index[idx1])
 
-            # Finding next index of the current tensor. the code below is
-            # similar to method .next_index with few additions.
-            k = 1
-            j = self._rank - 1
-            # input index numbers will be passed (they are changing in code
-            # block above)
-            while j == idx1 or j == idx2:
-                j = self._rank - 1 - k
-                k += 1
-            if j > -1:
-                old_index[j] += 1
-                if (old_index[j] == self.end_index[j] + 1) and (j != 0):
-                    while (old_index[j] == self.end_index[j] + 1) and j > 0:
-                        old_index[j] = self.start_index[j]
-                        j -= 1
-                        while j == idx1 or j == idx2:
-                            j -= 1
-                        if j > 0:
-                            old_index[j] += 1
-
-            # Finding next index of the result tensor. the code below is
-            # similar to method .next_index with few additions.
-            j = len(result_tensor.shape) - 1
-            if not new_index == []:
-                new_index[j] += 1
-                if (new_index[j] == result_tensor.shape[j]) and (j != 0):
-                    while (new_index[j] == self._dims[j]) and j > 0:
-                        new_index[j] = 0
-                        j -= 1
-                        new_index[j] += 1
+            for j in range(0, self.shape[idx1]):
+                result_tensor[i] += self[tuple(temp_index)]
+                temp_index[idx1] += 1
+                temp_index[idx2] += 1
 
         return result_tensor
-        '''
 
     def reshape(self, new_shape, ind_char):
         """reshape method are overloaded and now requires 2 arguments.
@@ -1288,7 +1166,7 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor(list(range(6)), (3,2), (1, -1))
         >>> print (a)
         0 1
@@ -1333,11 +1211,11 @@ class TensorArray(Arraypy):
         Examples
         ========
 
-        >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
+        >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
         >>> a = list2tensor (list(range(9)), (3, 3), (1, -1))
         >>> b = a.to_arraypy()
         >>> type(b)
-        <class 'tensor_analysis.arraypy.Arraypy'>
+        <class 'sympy.tensor.arraypy.Arraypy'>
         >>> print (b)
         0 1 2
         3 4 5
@@ -1359,14 +1237,14 @@ def matrix2arraypy(matrix):
     Examples
     ========
 
-    >>> from tensor_analysis.arraypy import Arraypy, TensorArray, matrix2arraypy
+    >>> from sympy.tensor.arraypy import Arraypy, TensorArray, matrix2arraypy
     >>> from sympy import Matrix
     >>> a = Matrix(((1,2),(3,4)))
     >>> print (a)
     Matrix([[1, 2], [3, 4]])
     >>> b = matrix2arraypy(a)
     >>> type(b)
-    <class 'tensor_analysis.arraypy.Arraypy'>
+    <class 'sympy.tensor.arraypy.Arraypy'>
     >>> print (b)
     1 2
     3 4
@@ -1395,14 +1273,14 @@ def matrix2tensor(matrix, ind_char=(-1, -1)):
     Examples
     ========
 
-    >>> from tensor_analysis.arraypy import Arraypy, TensorArray, matrix2tensor
+    >>> from sympy.tensor.arraypy import Arraypy, TensorArray, matrix2tensor
     >>> from sympy import Matrix
     >>> a = Matrix(((1,2),(3,4)))
     >>> print (a)
     Matrix([[1, 2], [3, 4]])
     >>> b = matrix2tensor(a, (1,-1))
     >>> type(b)
-    <class 'tensor_analysis.arraypy.TensorArray'>
+    <class 'sympy.tensor.arraypy.TensorArray'>
     >>> print (b)
     1 2
     3 4
@@ -1427,7 +1305,7 @@ def list2arraypy(list_arr, shape=0):
     Examples
     ========
 
-    >>> from tensor_analysis.arraypy import Arraypy, list2arraypy
+    >>> from sympy.tensor.arraypy import Arraypy, list2arraypy
     >>> a = list2arraypy(list(range(3*3)), (3,3))
     >>> print (a)
     0 1 2
@@ -1474,10 +1352,10 @@ def list2tensor(list_arr, shape=0, ind_char=0):
     Examples
     ========
 
-    >>> from tensor_analysis.arraypy import Arraypy, TensorArray, list2tensor
+    >>> from sympy.tensor.arraypy import Arraypy, TensorArray, list2tensor
     >>> a = list2tensor([i*2 for i in range(9)], (3,3), (-1,1))
     >>> type(a)
-    <class 'tensor_analysis.arraypy.TensorArray'>
+    <class 'sympy.tensor.arraypy.TensorArray'>
     >>> print (a)
     0 2 4
     6 8 10

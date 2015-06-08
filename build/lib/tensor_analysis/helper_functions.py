@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from tensor_analysis.tensor_methods import is_symmetric, is_asymmetric
-from tensor_analysis.arraypy import Arraypy, TensorArray
+from tensor_analysis.tensor_methods import is_symmetric, is_asymmetric, Arraypy, \
+    TensorArray
 from sympy.matrices import Matrix
 
 
 def check_vector_of_arguments(args):
+    """The function contains checks for a one-dimensional list of arguments
+
+    """
+
     if not isinstance(args, (list, TensorArray, Arraypy)):
         raise TypeError(
             "The type of vector of arguments must be list, TensorArray or \
@@ -20,6 +24,8 @@ def check_vector_of_arguments(args):
 
 
 def check_metric_tensor(g):
+    """The function contains checks for a metric tensor."""
+
     if not isinstance(g, (TensorArray, Matrix, Arraypy)):
         raise ValueError(
             "Type of metric tensor must be Matrix, TensorArray or Arraypy")
@@ -34,7 +40,22 @@ def check_metric_tensor(g):
             raise ValueError("The metric is not symmetric")
 
 
+def check_the_christoffel_symbols_2(ch_2):
+    """The function contains checks for a christoffel symbols of second
+    kind."""
+    if not isinstance(ch_2, (Arraypy, TensorArray)):
+        raise TypeError(
+            'The type of Christoffel symbol of second kind must be Arraypy \
+            or TensorArray')
+    if isinstance(ch_2, TensorArray) and ch_2.type_pq != (1, 2):
+        raise ValueError(
+            'The valence of Christoffel symbol of second \
+                 kind must be (1, -1, -1)')
+
+
 def check_the_vector_field(X):
+    """The function contains checks for a vector field."""
+
     if not isinstance(X, (list, TensorArray, Arraypy)):
         raise ValueError(
             "The type of vector field must be list, TensorArray or Arraypy")

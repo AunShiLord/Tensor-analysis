@@ -1,2 +1,2 @@
-tensor_analysis
 tensor_analysis/tests
+tensor_analysis

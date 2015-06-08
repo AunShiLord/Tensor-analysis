@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name = "tensor-analysis",
     packages = ["tensor_analysis", "tensor_analysis/tests"],
-    version = "0.9.2",   
+    version = "0.9.3",   
     description = "Tensor analysis package for n-dimensional tensor calculation",
     author = "Vladimir Kuzmin, Konovalenko Anastasia, Merzlyakova Ksenia",
     author_email = "aunshilord@yahoo.com",

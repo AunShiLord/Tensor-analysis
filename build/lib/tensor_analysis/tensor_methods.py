@@ -5,6 +5,7 @@ from tensor_analysis.arraypy import Arraypy, TensorArray, copy
 from random import randint
 from sympy.functions.combinatorial.factorials import factorial
 from sympy import expand
+from sympy import simplify
 from copy import copy
 
 
@@ -22,9 +23,9 @@ def symmetric(in_arr):
     >>> a = list2arraypy(list(range(9)), (3,3))
     >>> b = symmetric(a)
     >>> print (b)
-    0  2.00000000000000  4.00000000000000
-    2.00000000000000  4.00000000000000  6.00000000000000
-    4.00000000000000  6.00000000000000  8.00000000000000
+    0  2  4  
+    2  4  6  
+    4  6  8  
     """
     if not isinstance(in_arr, Arraypy):
         raise TypeError('Input must be Arraypy or TensorArray type')
@@ -52,9 +53,9 @@ def symmetric(in_arr):
         perm = list(permutations(index))
         for temp_index in perm:
             res_arr[tuple(index)] += in_arr[tuple(temp_index)]
-        if isinstance(res_arr[tuple(index)], int):
-            res_arr[tuple(index)] = float(res_arr[tuple(index)])
+
         res_arr[tuple(index)] /= factorial(in_arr.rank)
+        res_arr[tuple(index)] = simplify(res_arr[tuple(index)])
 
         index = in_arr.next_index(index)
 
@@ -75,9 +76,9 @@ def asymmetric(in_arr):
     >>> a = list2arraypy(list(range(9)), (3,3))
     >>> b = asymmetric(a)
     >>> print (b)
-    0  -1.00000000000000  -2.00000000000000
-    1.00000000000000  0  -1.00000000000000
-    2.00000000000000  1.00000000000000  0
+    0  -1  -2  
+    1  0  -1  
+    2  1  0 
     """
     if not isinstance(in_arr, Arraypy):
         raise TypeError('Input must be Arraypy or TensorArray type')
@@ -114,9 +115,9 @@ def asymmetric(in_arr):
             res_arr[tuple(index)] += signs[perm_number] * \
                 in_arr[tuple(temp_index)]
             perm_number += 1
-        if isinstance(res_arr[tuple(index)], int):
-            res_arr[tuple(index)] = float(res_arr[tuple(index)])
+
         res_arr[tuple(index)] /= factorial(in_arr.rank)
+        res_arr[tuple(index)] = simplify(res_arr[tuple(index)])
 
         index = in_arr.next_index(index)
 
@@ -187,6 +188,16 @@ def wedge(first_tensor, second_tensor):
 
     Examples
     ========
+    from tensor_analysis.arraypy import Arraypy, Tensor
+    from tensor_analysis.tensor_methods import wedge
+    >>> a = Arraypy((3,), 'A').to_tensor((-1))
+    >>> b = Arraypy((3,), 'B').to_tensor((1,))
+    >>> c = wedge(a, b)
+    >>> print(c)
+    0  10*A[0]*B[1] - 10*A[1]*B[0]  10*A[0]*B[2] - 10*A[2]*B[0]  
+    -10*A[0]*B[1] + 10*A[1]*B[0]  0  10*A[1]*B[2] - 10*A[2]*B[1]  
+    -10*A[0]*B[2] + 10*A[2]*B[0]  -10*A[1]*B[2] + 10*A[2]*B[1]  0 
+
 
     """
     if not isinstance(first_tensor, TensorArray):
@@ -197,7 +208,7 @@ def wedge(first_tensor, second_tensor):
     p = len(first_tensor)
     s = len(second_tensor)
 
-    coeff = factorial(p + s) / factorial(p) * factorial(s)
+    coeff = factorial(p + s) / (factorial(p) * factorial(s))
     return coeff * asymmetric(tensor_product(first_tensor, second_tensor))
 
 
@@ -479,9 +490,19 @@ def perm_parity(lst):
 
 def is_symmetric(array):
     """Check if array or tensor is already symmetric."""
+    for i in array.index_list:
+            array[i] = simplify(array[i])
     return array == symmetric(array)
 
 
 def is_asymmetric(array):
     """Check if array or tensor is already asymmetric."""
+    for i in array.index_list:
+        array[i] = simplify(array[i])
     return array == asymmetric(array)
+
+from sympy import list2arraypy
+a = list2arraypy([randint(1, 100) for i in range(3*3*3*3)], (3,3,3,3))
+print(a)
+y5=asymmetric(a)
+print(y5)
